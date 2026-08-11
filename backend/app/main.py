@@ -1,10 +1,9 @@
 """
 FastAPI application entry point.
 
-Task 0 scope: the app must start, expose /docs, and expose a health check.
-Feature routers (clients, compliance-schedules, tasks, checklists,
-dashboard) are registered here as empty placeholders so that future tasks
-plug straight into api/routes/ without touching this file's structure.
+Exposes /health and /docs. Feature routers (clients, compliance-schedules,
+tasks, checklists, dashboard) are registered below as they're implemented
+— each router module lives in app/api/routes/ and is mounted here.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -35,6 +34,10 @@ def health_check() -> dict:
 # --- Feature routers ---
 # Registered as they are implemented by future tasks. Each router module
 # lives in app/api/routes/ and is prefixed per API_SPEC.md.
+from app.api.routes import clients  # noqa: E402
+
+app.include_router(clients.router, prefix=f"{settings.api_v1_prefix}/clients", tags=["clients"])
+
 # Example (added by a future task):
-#   from app.api.routes import clients
-#   app.include_router(clients.router, prefix=f"{settings.api_v1_prefix}/clients", tags=["clients"])
+#   from app.api.routes import tasks
+#   app.include_router(tasks.router, prefix=f"{settings.api_v1_prefix}/tasks", tags=["tasks"])

@@ -34,9 +34,14 @@ def health_check() -> dict:
 # --- Feature routers ---
 # Registered as they are implemented by future tasks. Each router module
 # lives in app/api/routes/ and is prefixed per API_SPEC.md.
-from app.api.routes import clients  # noqa: E402
+from app.api.routes import clients, compliance_schedules  # noqa: E402
 
 app.include_router(clients.router, prefix=f"{settings.api_v1_prefix}/clients", tags=["clients"])
+app.include_router(
+    compliance_schedules.router,
+    prefix=f"{settings.api_v1_prefix}/compliance-schedules",
+    tags=["compliance-schedules"],
+)
 
 # Example (added by a future task):
 #   from app.api.routes import tasks
